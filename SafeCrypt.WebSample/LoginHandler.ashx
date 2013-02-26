@@ -14,18 +14,31 @@ public class TrueHandler : IHttpHandler
 {
     public void ProcessRequest(HttpContext context)
     {
-        string baseurl = "http://www.it-kartellet.dk/safecrypt.php?token=";
+        string baseurl = "http://localhost/safecrypt.php?token=";
 
         var EncryptionKey = "1AE7AF71D4EB4F382226D3E36441934CBF27DD437720135E287B554BDDDC85A2";
         var ValidationKey = "9FA1F8EA0EA0375E51562E30AEBB78C55A8AC7CE3B15260232D5A7DEDD3B6314";
 
-        var token = "{\"login\":\"tlb\",\"name\":\"Troels Liebe Bentsen\"}";
+        //Retrieve and instantiate token JSON object.
+        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+        string token = serializer.Serialize(new
+        {
+            login = "tlb",
+            name = "Troels Liebe Bentsen",
+            email = "test@test.dk"
+        });
 
+        //Encode the token
         var sc = new SafeCrypt.SafeCrypt(EncryptionKey, ValidationKey);
-        var ectoken = sc.Encode(Encoding.UTF8.GetBytes(token));
-
-        string username = context.Request.QueryString["username"];
-        context.Response.Redirect(baseurl + HttpUtility.UrlEncode(ectoken), false);
+        var encodedToken = sc.Encode(Encoding.UTF8.GetBytes(token));
+        //Create redirect url
+        var redirectUrl = baseurl + HttpUtility.UrlEncode(encodedToken);
+        if (context.Request.QueryString["site"] != null)
+        {
+            var site = context.Request.QueryString["site"];
+            redirectUrl += "&site=" + HttpUtility.UrlEncode(site);
+        }
+        context.Response.Redirect(redirectUrl, false);
     }
 
     public bool IsReusable
