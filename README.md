@@ -10,8 +10,8 @@ Drop SafeCrypt.cs and SafeCrypt.php into your project.
 
 C#:
 
-    var EncryptionKey = "...";
-    var ValidationKey = "...";
+    var EncryptionKey = "..."; //64-char hex
+    var ValidationKey = "..."; //64-char hex
     
     var token = "tlb,Troels Liebe Bentsen";
     var sc = new SafeCrypt(EncryptionKey, ValidationKey);
@@ -21,16 +21,17 @@ C#:
 
 PHP:
 
-    //hex keys
-    $encryptionkey = "...";
-    $validationkey = "...";
+    $encryption_key = "..."; //64-char hex
+    $validation_key = "..."; //64-char hex
     
     //Convert hex keys to binary
-    $encryptionkeybin = pack('H*', $encryptionkeyhex);
-    $validationkeybin = pack('H*', $validationkeyhex);
-    
-    $encrypted = encrypt($data, $encryptionkeybin, $validationkeybin);
-    $decrypted = decrypt($data, $encryptionkeybin, $validationkeybin);
+    $encryption_key = pack('H*', $encryption_key);
+    $validation_key = pack('H*', $validation_key);
+
+    $token = "the token to encrypt";
+    $sc = new safecrypt($encryption_key, $validation_key);
+    $encrypted = $sc->encrypt($token);
+    $decrypted = $sc->decrypt($encrypted);
 
 # Security #
 
@@ -52,4 +53,3 @@ of keys just for authentication.
 # TODO #
 
 Implement Java version : http://blog.palominolabs.com/2013/02/12/encryption-in-java/
-
