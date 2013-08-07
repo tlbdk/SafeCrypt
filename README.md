@@ -10,27 +10,27 @@ Drop SafeCrypt.cs and SafeCrypt.php into your project.
 
 C#:
 
-var EncryptionKey = "...";
-var ValidationKey = "...";
-
-var token = "tlb,Troels Liebe Bentsen";
-var sc = new SafeCrypt(EncryptionKey, ValidationKey);
-var ectoken = sc.Encode(Encoding.UTF8.GetBytes(token));
-Console.WriteLine(ectoken);
-Console.WriteLine(Encoding.UTF8.GetString(sc.Decode(ectoken)));
+    var EncryptionKey = "...";
+    var ValidationKey = "...";
+    
+    var token = "tlb,Troels Liebe Bentsen";
+    var sc = new SafeCrypt(EncryptionKey, ValidationKey);
+    var ectoken = sc.Encode(Encoding.UTF8.GetBytes(token));
+    Console.WriteLine(ectoken);
+    Console.WriteLine(Encoding.UTF8.GetString(sc.Decode(ectoken)));
 
 PHP:
 
-//hex keys
-$encryptionkey = "...";
-$validationkey = "...";
-
-//Convert hex keys to binary
-$encryptionkeybin = pack('H*', $encryptionkeyhex);
-$validationkeybin = pack('H*', $validationkeyhex);
-
-$encrypted = encrypt($data, $encryptionkeybin, $validationkeybin);
-$decrypted = decrypt($data, $encryptionkeybin, $validationkeybin);
+    //hex keys
+    $encryptionkey = "...";
+    $validationkey = "...";
+    
+    //Convert hex keys to binary
+    $encryptionkeybin = pack('H*', $encryptionkeyhex);
+    $validationkeybin = pack('H*', $validationkeyhex);
+    
+    $encrypted = encrypt($data, $encryptionkeybin, $validationkeybin);
+    $decrypted = decrypt($data, $encryptionkeybin, $validationkeybin);
 
 # Security #
 
