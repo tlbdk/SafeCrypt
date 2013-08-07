@@ -31,7 +31,7 @@ PHP:
     $token = "the token to encrypt";
     $sc = new safecrypt($encryption_key, $validation_key);
     $encrypted = $sc->encrypt($token);
-    $decrypted = $sc->decrypt($decrypted);
+    $decrypted = $sc->decrypt($encrypted);
 
 # Security #
 
